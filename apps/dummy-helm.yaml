@@ -18,7 +18,7 @@ spec:
       targetRevision: HEAD
       path: apps/dummy-helm
     - repoURL: registry-1.docker.io/pierreyveslebrun
-      targetRevision: 1.0.0
+      targetRevision: 1.1.0
       chart: dummy-helm
       helm:
         releaseName: dummy-helm
