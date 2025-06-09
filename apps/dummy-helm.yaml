@@ -32,3 +32,5 @@ spec:
               maxSurge: 1
           service:
             type: NodePort
+          securityContext:
+            runAsNonRoot: true
