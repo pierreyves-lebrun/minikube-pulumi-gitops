@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dummy-helm
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: false
+    syncOptions:
+      - CreateNamespace=true
+  destination:
+    name: in-cluster
+    namespace: dummy-helm
+  sources:
+    - repoURL: https://github.com/pierreyves-lebrun/minikube-pulumi-gitops
+      targetRevision: HEAD
+      path: apps/dummy-helm
+    - repoURL: registry-1.docker.io/pierreyveslebrun
+      targetRevision: 1.0.0
+      chart: dummy-helm
+      helm:
+        releaseName: dummy-helm
+        valuesObject:
+          httpEcho:
+            replicaCount: 2
+          strategy:
+            type: RollingUpdate
+            rollingUpdate:
+              maxUnavailable: 1
+              maxSurge: 1
+          service:
+            type: NodePort
